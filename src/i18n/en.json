@@ -561,9 +561,9 @@
     "youPrefix": "You: {text}",
     "startConversation": "Start a conversation",
     "title": "Chats",
-    "search": "Search chats",
+    "search": "Search people",
     "noMatch": "No chats match “{q}”.",
-    "addFriends": "Add friends to start chatting."
+    "addFriends": "Search for anyone to start a chat."
   },
   "stories": {
     "options": "Story options",
@@ -580,7 +580,8 @@
     "captionPlaceholder": "Say something about this photo…",
     "sharing": "Sharing…",
     "share": "Share to story",
-    "more": "More stories"
+    "more": "More stories",
+    "previous": "Previous stories"
   },
   "register": {
     "failed": "Registration failed",

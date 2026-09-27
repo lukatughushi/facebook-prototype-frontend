@@ -229,12 +229,10 @@ export default function ProfileHeader({
             ) : (
               <>
                 <FriendButton userId={profile._id} onStatusChange={onFriendStatusChange} />
-                {friendStatus === "friends" && (
-                  <button onClick={onMessage} className={actionBtn(true)}>
-                    <Icon name="message" size={16} sw={2.4} />
-                    <span>{t("profile.message")}</span>
-                  </button>
-                )}
+                <button onClick={onMessage} className={actionBtn(friendStatus === "friends")}>
+                  <Icon name="message" size={16} sw={2.4} />
+                  <span>{t("profile.message")}</span>
+                </button>
               </>
             )}
             <button

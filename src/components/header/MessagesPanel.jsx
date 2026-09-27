@@ -9,7 +9,8 @@ import Icon from "../Icon";
 import { useLanguage } from "../../context/LanguageContext";
 
 // "Chats" panel: recent conversations (with unread markers) followed by
-// friends you haven't messaged yet. Clicking a row opens a floating chat.
+// friends you haven't messaged yet. Typing also searches everyone on the
+// site, so you can start a chat with any user. Clicking a row opens a chat.
 export default function MessagesPanel({ onClose }) {
   const { user } = useAuth();
   const { t } = useLanguage();
@@ -17,6 +18,7 @@ export default function MessagesPanel({ onClose }) {
   const { isOnline } = useSocket();
   const [friends, setFriends] = useState([]);
   const [q, setQ] = useState("");
+  const [people, setPeople] = useState([]);
 
   useEffect(() => {
     refreshConversations();
@@ -25,6 +27,26 @@ export default function MessagesPanel({ onClose }) {
       .then(({ data }) => setFriends(data.friends))
       .catch(() => setFriends([]));
   }, [refreshConversations]);
+
+  // Everyone matching the search (debounced), not just friends/contacts.
+  useEffect(() => {
+    const query = q.trim();
+    if (!query) {
+      setPeople([]);
+      return;
+    }
+    let cancelled = false;
+    const timer = setTimeout(() => {
+      api
+        .get("/users", { params: { q: query } })
+        .then(({ data }) => !cancelled && setPeople(data.users))
+        .catch(() => !cancelled && setPeople([]));
+    }, 250);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [q]);
 
   const rows = useMemo(() => {
     const seen = new Set(conversations.map((c) => c.user._id));
@@ -36,8 +58,14 @@ export default function MessagesPanel({ onClose }) {
       ...friends.filter((f) => !seen.has(f._id)).map((f) => ({ person: f, last: t("chat.startConversation"), time: "", unread: false })),
     ];
     const needle = q.trim().toLowerCase();
-    return needle ? all.filter((r) => r.person.name.toLowerCase().includes(needle)) : all;
-  }, [conversations, friends, q, user._id, t]);
+    if (!needle) return all;
+    const matches = all.filter((r) => r.person.name.toLowerCase().includes(needle));
+    const shown = new Set(matches.map((r) => r.person._id));
+    return [
+      ...matches,
+      ...people.filter((p) => !shown.has(p._id)).map((p) => ({ person: p, last: t("chat.startConversation"), time: "", unread: false })),
+    ];
+  }, [conversations, friends, people, q, user._id, t]);
 
   return (
     <div className="panel absolute top-12 right-0 w-[min(360px,calc(100vw-16px))] max-h-[calc(100vh-72px)] overflow-auto px-2 py-3 z-40">

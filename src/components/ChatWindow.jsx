@@ -134,8 +134,8 @@ export default function ChatWindow({ friend, onClose }) {
 
   return (
     <div
-      className={`w-[328px] max-w-[calc(100vw-16px)] bg-hx-card rounded-t-lg shadow-hx-pop flex flex-col overflow-hidden animate-hx-rise ${
-        minimized ? "" : "h-[455px] max-h-[calc(100vh-72px)]"
+      className={`w-full sm:w-[328px] bg-hx-card sm:rounded-t-lg shadow-hx-pop flex flex-col overflow-hidden animate-hx-rise ${
+        minimized ? "" : "h-[100dvh] sm:h-[455px] sm:max-h-[calc(100vh-72px)]"
       }`}
     >
       <div className="flex items-center gap-1 px-2 h-12 flex-shrink-0 border-b border-hx-border shadow-hx">

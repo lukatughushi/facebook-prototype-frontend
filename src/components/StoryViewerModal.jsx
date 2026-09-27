@@ -4,7 +4,7 @@ import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import Avatar from "./Avatar";
 import Icon from "./Icon";
-import resolveImage from "../utils/resolveImage";
+import { StoryImage } from "./StoriesBar";
 import { colorFor, firstName } from "../utils/format";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -190,19 +190,23 @@ export default function StoryViewerModal({ groups, groupIndex, onNavigateGroup, 
 
   return createPortal(
     <div className="fixed inset-0 z-[70] bg-[#0e0f10] flex items-center justify-center animate-hx-fade">
-      <button onClick={onClose} aria-label={t("common.close")} className={`${roundBtn} absolute top-4 right-4 w-10 h-10`}>
+      <button onClick={onClose} aria-label={t("common.close")} className={`${roundBtn} absolute z-30 top-[22px] right-12 sm:top-4 sm:right-4 w-10 h-10`}>
         <Icon name="x" size={20} />
       </button>
 
-      <button onClick={goPrev} aria-label={t("common.previous")} className={`${roundBtn} w-12 h-12 mr-4`}>
+      <button onClick={goPrev} aria-label={t("common.previous")} className={`${roundBtn} hidden sm:flex w-12 h-12 mr-4`}>
         <Icon name="chevLeft" size={22} />
       </button>
 
       <div
-        className="relative h-[min(86vh,760px)] aspect-[9/16] max-w-[calc(100vw-150px)] rounded-xl overflow-hidden"
+        className="relative w-full h-full sm:w-auto sm:h-[min(86vh,760px)] sm:aspect-[9/16] sm:max-w-[calc(100vw-150px)] sm:rounded-xl overflow-hidden"
         style={{ background: colorFor(story.author?.name) }}
       >
-        <img src={resolveImage(story.image)} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <StoryImage key={story.image} src={story.image} className="absolute inset-0 w-full h-full object-cover" />
+        {/* Phones: the story fills the screen; tap the left third to go back,
+            anywhere else to go forward (the arrow buttons are hidden). */}
+        <button type="button" onClick={goPrev} aria-label={t("common.previous")} className="sm:hidden absolute inset-y-0 left-0 w-1/3" />
+        <button type="button" onClick={goNext} aria-label={t("common.next")} className="sm:hidden absolute inset-y-0 right-0 w-2/3" />
         <div className="absolute inset-x-0 top-0 h-[120px] bg-[linear-gradient(180deg,rgba(0,0,0,0.5),rgba(0,0,0,0))] pointer-events-none" />
 
         <div className="absolute top-3 left-3 right-3 flex gap-1 pointer-events-none">
@@ -216,7 +220,7 @@ export default function StoryViewerModal({ groups, groupIndex, onNavigateGroup, 
           ))}
         </div>
 
-        <div className="absolute top-[26px] left-3 right-12 flex items-center gap-2 text-white pointer-events-none min-w-0">
+        <div className="absolute top-[26px] left-3 right-24 sm:right-12 flex items-center gap-2 text-white pointer-events-none min-w-0">
           <span className="rounded-full border-2 border-white flex-shrink-0">
             <Avatar src={author?.avatar} name={author?.name} size={36} />
           </span>
@@ -299,7 +303,7 @@ export default function StoryViewerModal({ groups, groupIndex, onNavigateGroup, 
         )}
       </div>
 
-      <button onClick={goNext} aria-label={t("common.next")} className={`${roundBtn} w-12 h-12 ml-4`}>
+      <button onClick={goNext} aria-label={t("common.next")} className={`${roundBtn} hidden sm:flex w-12 h-12 ml-4`}>
         <Icon name="chevRight" size={22} />
       </button>
     </div>,
