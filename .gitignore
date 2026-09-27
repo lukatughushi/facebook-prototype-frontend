@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+.vercel
+
+# Design/preview scratch files, not part of the app
+shots/
+.thumbnail
+.image-slots.state.json
+image-slot.js
+support.js
+Social Feed.dc.html
