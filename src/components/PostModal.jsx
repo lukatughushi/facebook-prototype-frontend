@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { firstName } from "../utils/format";
 import resolveImage from "../utils/resolveImage";
 import Avatar from "./Avatar";
-import EmojiPicker from "./EmojiPicker";
+import EmojiPicker, { insertAtCursor } from "./EmojiPicker";
 import Icon from "./Icon";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -71,16 +71,7 @@ export default function PostModal({ mode = "create", post, target, initialAction
     setPreview(URL.createObjectURL(file));
   };
 
-  const insertEmoji = (emoji) => {
-    const el = textareaRef.current;
-    const start = el?.selectionStart ?? draft.length;
-    const end = el?.selectionEnd ?? draft.length;
-    setDraft(draft.slice(0, start) + emoji + draft.slice(end));
-    requestAnimationFrame(() => {
-      el?.focus();
-      el?.setSelectionRange(start + emoji.length, start + emoji.length);
-    });
-  };
+  const insertEmoji = (emoji) => setDraft(insertAtCursor(textareaRef.current, draft, emoji));
 
   const canPost = isEdit ? !!draft.trim() : !!(draft.trim() || image);
 

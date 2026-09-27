@@ -99,7 +99,8 @@ export default function ForgotPassword() {
         {step === "code" && (
           <form onSubmit={verify} className="space-y-3">
             <h1 className="text-lg font-semibold">{t("forgot.codeTitle")}</h1>
-            <p className="text-sm text-hx-text2">{t("forgot.codeText", { email: email.trim() })}</p>
+            {/* No email goes out when the code is shown on screen. */}
+            {!devCode && <p className="text-sm text-hx-text2">{t("forgot.codeText", { email: email.trim() })}</p>}
             {devCode && (
               <div className="rounded-md border border-dashed border-hx-accent bg-hx-accent-soft px-3 py-2 text-sm">
                 <div className="font-semibold text-hx-accent">{t("forgot.demoCode", { code: devCode })}</div>

@@ -8,6 +8,7 @@ import { firstName, timeAgo } from "../utils/format";
 import { REACTION, summarize, toggleInList } from "../utils/reactions";
 import Avatar from "./Avatar";
 import Icon from "./Icon";
+import EmojiPicker, { insertAtCursor } from "./EmojiPicker";
 import MoreMenu from "./MoreMenu";
 import ReactionPicker from "./reactions/ReactionPicker";
 import ReactionSummary from "./reactions/ReactionSummary";
@@ -302,6 +303,7 @@ const CommentSection = forwardRef(function CommentSection({ basePath, comments, 
             maxLength={500}
             className="flex-1 min-w-0 h-9 border-0 outline-none bg-transparent text-hx-text text-[15px]"
           />
+          <EmojiPicker small label={t("chat.emoji")} onSelect={(emoji) => setDraft(insertAtCursor(inputRef.current, draft, emoji, 500))} />
           <button
             onClick={submit}
             aria-label={t("chat.send")}

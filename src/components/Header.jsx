@@ -161,13 +161,22 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-30 h-14 bg-hx-card shadow-hx grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center px-4 gap-2 transition-colors duration-200">
         <div className="relative flex items-center gap-2 min-w-0">
-          <div
-            title={APP_NAME}
+          {/* Classic Facebook "f" logo: the blue path has the "f" cut out, and
+              the white circle underneath shows through it in both themes. */}
+          <svg
+            role="link"
+            aria-label={APP_NAME}
             onClick={goHome}
-            className="w-10 h-10 rounded-xl bg-hx-accent text-white flex items-center justify-center font-extrabold text-2xl tracking-[-1px] flex-shrink-0 cursor-pointer select-none"
+            viewBox="0 0 24 24"
+            className="w-10 h-10 flex-shrink-0 cursor-pointer select-none"
           >
-            h
-          </div>
+            <title>{APP_NAME}</title>
+            <circle cx="12" cy="12" r="11.4" fill="#fff" />
+            <path
+              fill="#1877F2"
+              d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"
+            />
+          </svg>
           <SearchBox compact={compactSearch} onFocusChange={setSearchFocused} />
         </div>
 

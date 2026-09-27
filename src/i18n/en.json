@@ -558,6 +558,7 @@
     "placeholder": "Aa",
     "messageLabel": "Message",
     "send": "Send",
+    "emoji": "Insert emoji",
     "youPrefix": "You: {text}",
     "startConversation": "Start a conversation",
     "title": "Chats",

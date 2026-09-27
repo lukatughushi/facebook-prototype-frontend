@@ -8,6 +8,7 @@ import { locale, useLanguage } from "../context/LanguageContext";
 import resolveImage from "../utils/resolveImage";
 import Avatar from "./Avatar";
 import Icon from "./Icon";
+import EmojiPicker, { insertAtCursor } from "./EmojiPicker";
 
 // Compact Marketplace listing card, shown above a message that references
 // it and as the banner of a chat opened with "Message seller".
@@ -221,6 +222,7 @@ export default function ChatWindow({ friend, onClose }) {
                 maxLength={2000}
                 className="flex-1 min-w-0 bg-transparent border-0 outline-none text-[15px] text-hx-text"
               />
+              <EmojiPicker small label={t("chat.emoji")} onSelect={(emoji) => setText(insertAtCursor(inputRef.current, text, emoji, 2000))} />
             </div>
             <button
               type="submit"
