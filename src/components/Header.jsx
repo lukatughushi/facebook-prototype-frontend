@@ -13,7 +13,7 @@ import MessagesPanel from "./header/MessagesPanel";
 import NotificationsPanel from "./header/NotificationsPanel";
 import AccountPanel from "./header/AccountPanel";
 
-export const APP_NAME = "Hearth";
+export const APP_NAME = "Facebook";
 
 // Each tab is a route; the active one (and its sliding indicator) is derived
 // from the URL, so deep links and back/forward stay in sync.
